@@ -53,39 +53,45 @@ public class DeveloperController {
     @PostMapping
 
     public ResponseEntity<Developer> createDeveloper(@RequestBody Developer developer) {
-        for(Developer existingDeveloper : developerStore.values()) {
-            if(existingDeveloper.getPhoneNumber().equals(developer.getPhoneNumber()) ||
-            existingDeveloper.getEmail().equals(developer.getEmail())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(developer);
-            }
-        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(developerService.createDeveloper(developer));
 
 
-        developer.setId(idCounter.getAndIncrement());
+        // for(Developer existingDeveloper : developerStore.values()) {
+        //     if(existingDeveloper.getPhoneNumber().equals(developer.getPhoneNumber()) ||
+        //     existingDeveloper.getEmail().equals(developer.getEmail())) {
+        //         return ResponseEntity.status(HttpStatus.CONFLICT).body(developer);
+        //     }
+        // }
 
-        if(developer.getId() > 3) {
-            developer.addSkill("React");
-            developer.addSkill("JS");
-            developer.addSkill("Numpy");
-        }
-        developer.addSkill("Python");
-        developer.addSkill("C++");
-        developer.addSkill("TensorFlow");
 
-        developerStore.put(developer.getId(), developer);
+        // developer.setId(idCounter.getAndIncrement());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(developer);
+        // if(developer.getId() > 3) {
+        //     developer.addSkill("React");
+        //     developer.addSkill("JS");
+        //     developer.addSkill("Numpy");
+        // }
+        // developer.addSkill("Python");
+        // developer.addSkill("C++");
+        // developer.addSkill("TensorFlow");
+
+        // developerStore.put(developer.getId(), developer);
+
+        // return ResponseEntity.status(HttpStatus.CREATED).body(developer);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Developer> replaceDeveloper(@PathVariable Long id, @RequestBody Developer developer) {
-        if(!developerStore.containsKey(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Developer());
-        }
-        developerStore.remove(id);
-        developerStore.put(id, developer);
+        // if(!developerStore.containsKey(id)) {
+        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Developer());
+        // }
+        // developerStore.remove(id);
+        // developerStore.put(id, developer);
 
-        return ResponseEntity.ok(developer);
+        // return ResponseEntity.ok(developer);
+
+        return ResponseEntity.ok(developerService.replaceDeveloper(id, developer));
     }
 
 }
